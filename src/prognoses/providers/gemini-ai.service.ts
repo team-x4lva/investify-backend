@@ -24,7 +24,7 @@ export class GeminiAIService {
         return JSON.parse(result.response.text());
     }
 
-    private formatPrompt(template: string, values: string[]) {
+    private formatPrompt<T>(template: string, values: T) {
         return template.replaceAll(
             /{(w+)}/g,
             (match, key) => values[key] || match
