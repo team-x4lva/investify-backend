@@ -10,8 +10,13 @@ export class PrognosesService {
         private readonly geminiAIService: GeminiAIService
     ) {}
 
-    makePrognosis(moneyAmount: number, endDate: Date, securities: Security[]) {
-        const bestDepositRates = this.scraperService.getBestDepositRates();
+    async makePrognosis(
+        moneyAmount: number,
+        endDate: Date,
+        securities: Security[]
+    ) {
+        const bestDepositRates =
+            await this.scraperService.getBestDepositRates();
         // Best securities sorted by sector (banki.ru)
         // Recommendations (banki.ru)
 
