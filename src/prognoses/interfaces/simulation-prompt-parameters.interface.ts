@@ -1,6 +1,6 @@
 export interface SimulationPromptParameters {
-    moneyAmount: number;
+    moneyAmount?: number;
     startDate: Date;
     endDate: Date;
-    volatility: number;
+    // portfolio
 }
