@@ -1,10 +1,17 @@
-import { Controller } from "@nestjs/common";
-import { ScraperService } from "src/scraper/scraper.service";
+import { Body, Controller, Post } from "@nestjs/common";
 import { PrognosesService } from "./prognoses.service";
+import { ConductSimulationDto } from "./dto/conduct-simulation.dto";
 
 @Controller("prognoses")
 export class PrognosesController {
     constructor(private readonly prognosesService: PrognosesService) {}
 
-    getPrognosis() {}
+    @Post()
+    conductSimulation(@Body() conductSimulationDto: ConductSimulationDto) {
+        return this.prognosesService.makePrognosis(
+            conductSimulationDto.moneyAmount,
+            conductSimulationDto.endDate,
+            conductSimulationDto.portfolio.securities
+        );
+    }
 }

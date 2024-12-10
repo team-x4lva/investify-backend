@@ -1,6 +1,6 @@
 import { IsArray, IsNumber, IsString, ValidateNested } from "class-validator";
 
-class Security {
+export class Security {
     @IsString()
     name: string;
 

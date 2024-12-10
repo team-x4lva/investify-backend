@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { GET_PROGNOSIS_PROMPT } from "src/constants/constants";
 
 @Injectable()
 export class GeminiAIService {
@@ -15,4 +16,19 @@ export class GeminiAIService {
             responseMimeType: "application/json"
         }
     });
+
+    async getAIPrognosis() {
+        const prompt: string = ""; //this.formatPrompt(GET_PROGNOSIS_PROMPT, {});
+
+        const result = await this.model.generateContent(prompt);
+
+        return JSON.parse(result.response.text());
+    }
+
+    private formatPrompt(template: string, values: string[]) {
+        return template.replaceAll(
+            /{(w+)}/g,
+            (match, key) => values[key] || match
+        );
+    }
 }
