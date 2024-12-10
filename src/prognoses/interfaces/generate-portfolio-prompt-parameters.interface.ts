@@ -1,4 +1,4 @@
-export interface GenerateortfolioPromptParameters {
+export interface GeneratePortfolioPromptParameters {
     moneyAmount: number;
     startDate: Date;
     endDate: Date;
