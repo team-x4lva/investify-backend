@@ -11,7 +11,7 @@ export class PrognosesController {
         return this.prognosesService.makePrognosis(
             conductSimulationDto.moneyAmount,
             conductSimulationDto.endDate,
-            conductSimulationDto.portfolio.securities
+            conductSimulationDto.portfolio.securitiesTickers
         );
     }
 }

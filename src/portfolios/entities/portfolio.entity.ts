@@ -11,6 +11,12 @@ export class PortfolioEntity {
     @Column()
     name: string;
 
+    @Column()
+    userId: number;
+
     @ManyToOne(() => UserEntity, (user) => user.portfolios)
     user: UserEntity;
+
+    @Column("text", { array: true })
+    securitiesTickers: string[];
 }

@@ -31,4 +31,8 @@ export class PortfoliosService {
     remove(id: number) {
         return this.portfolioRepository.delete(id);
     }
+
+    findByUserId(userId: number) {
+        return this.portfolioRepository.find({ where: { userId } });
+    }
 }

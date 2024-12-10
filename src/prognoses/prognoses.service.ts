@@ -13,7 +13,7 @@ export class PrognosesService {
     async makePrognosis(
         moneyAmount: number,
         endDate: Date,
-        securities: Security[]
+        securitiesTickers: string[]
     ) {
         const bestDepositRates =
             await this.scraperService.getBestDepositRates();

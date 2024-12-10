@@ -82,5 +82,31 @@ Response JSON Example:
 }
 Ensure that the recommendations align with the user's preferences and market trends. Focus on clear, actionable advice tied to the investment period and potential market events.`;
 
+export const GENERATE_PORTFOLIO_PROMPT = `Generate an investment portfolio tailored to a selected strategy and specified allocation preferences.
+
+Key Parameters:
+
+Strategy Type:
+
+Conservative: Focus on capital preservation with low risk and steady returns. Allocate a higher percentage to bonds and stable instruments.
+Balanced: Aim for moderate risk and returns by blending equities and bonds, complemented with smaller portions of alternative assets.
+Aggressive: Prioritize growth with high risk and potential for high returns, focusing on equities and alternative investments.
+Asset Categories:
+
+Equities (Stocks): Include large-cap, mid-cap, and small-cap stocks diversified across industries and geographies, with a preference for Russian companies.
+Bonds: Include government bonds, corporate bonds, and municipal bonds with varying durations, prioritizing Russian issuers.
+Currency: Incorporate foreign exchange options for diversification and hedging.
+Gold: Provide stability and hedge against inflation.
+Oil: Exposure to energy markets, with an emphasis on Russian producers where applicable.
+Percentage Allocation:
+
+Users can specify desired percentages for each category or follow default allocations aligned with the strategy.
+Additional Requirements:
+
+Tailor allocations to minimize risks within each category.
+Provide diversification by including a mix of assets in each category.
+Ensure the portfolio aligns with the given strategy while maintaining flexibility for market conditions.
+Where possible, prioritize instruments linked to Russian companies or issuers.`;
+
 export const IS_PUBLIC_KEY = "isPublic";
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
