@@ -3,7 +3,7 @@ import * as cheerio from "cheerio";
 import axios from "axios";
 
 @Injectable()
-export class ScrapperService {
+export class ScraperService {
     private depositRatesEndpoint = "http://www.sravni.ru/vklady/";
 
     async getBestDepositRates() {

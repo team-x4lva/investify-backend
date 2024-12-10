@@ -1,5 +1,5 @@
 import { Controller } from "@nestjs/common";
-import { ScrapperService } from "src/scrapper/scrapper.service";
+import { ScraperService } from "src/scraper/scraper.service";
 import { PrognosesService } from "./prognoses.service";
 
 @Controller("prognoses")

@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { ScrapperService } from "src/scrapper/scrapper.service";
+import { ScraperService } from "src/scraper/scraper.service";
 
 @Injectable()
 export class PrognosesService {
-    constructor(private readonly scraperService: ScrapperService) {}
+    constructor(private readonly scraperService: ScraperService) {}
 
     makePrognosis() {
         const bestDepositRates = this.scraperService.getBestDepositRates();
