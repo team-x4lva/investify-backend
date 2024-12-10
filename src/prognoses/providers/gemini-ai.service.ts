@@ -1,7 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { GET_PROGNOSIS_PROMPT } from "src/constants/constants";
 
 @Injectable()
 export class GeminiAIService {
