@@ -1,4 +1,5 @@
 import { IsArray, IsNumber, IsString, ValidateNested } from "class-validator";
+import { PortfolioEntity } from "../entities/portfolio.entity";
 
 export class Security {
     @IsString()
@@ -8,7 +9,7 @@ export class Security {
     share: number;
 }
 
-export class PortfolioDto {
+export class PortfolioDto extends PortfolioEntity {
     @IsArray()
     @ValidateNested({ each: true })
     securities: Security[];

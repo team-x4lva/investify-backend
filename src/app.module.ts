@@ -7,6 +7,8 @@ import * as Joi from "joi";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthModule } from "./auth/auth.module";
 import { UserEntity } from "./users/entities/user.entity";
+import { PortfoliosModule } from "./portfolios/portfolios.module";
+import { PortfolioEntity } from "./portfolios/entities/portfolio.entity";
 
 @Module({
     imports: [
@@ -35,13 +37,14 @@ import { UserEntity } from "./users/entities/user.entity";
                 username: configService.getOrThrow<string>("POSTGRES_USER"),
                 password: configService.getOrThrow<string>("POSTGRES_PASSWORD"),
                 database: configService.getOrThrow<string>("POSTGRES_DB"),
-                entities: [UserEntity],
+                entities: [UserEntity, PortfolioEntity],
                 synchronize: true
             }),
             inject: [ConfigService]
         }),
         PrognosesModule,
-        AuthModule
+        AuthModule,
+        PortfoliosModule
     ],
     controllers: [AppController],
     providers: [AppService]

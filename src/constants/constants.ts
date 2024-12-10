@@ -1,3 +1,5 @@
+import { SetMetadata } from "@nestjs/common";
+
 export const GET_PROGNOSIS_PROMPT = `Analyze the provided financial data and user preferences to generate a detailed investment strategy tailored to the user's risk tolerance and investment horizon. Predict asset returns, evaluate risks, and recommend specific actions for optimizing the portfolio over the selected investment period. Incorporate growth or decline predictions for key assets and suggest when to buy, sell, or adjust allocations. Provide the response in JSON format with the following structure:
 
 1. Forecast:
@@ -79,3 +81,6 @@ Response JSON Example:
   ]
 }
 Ensure that the recommendations align with the user's preferences and market trends. Focus on clear, actionable advice tied to the investment period and potential market events.`;
+
+export const IS_PUBLIC_KEY = "isPublic";
+export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
