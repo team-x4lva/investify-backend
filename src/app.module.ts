@@ -3,10 +3,11 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { PrognosesModule } from "./prognoses/prognoses.module";
 import { PrognosesController } from "./prognoses/prognoses.controller";
-import { ConfigModule } from "@nestjs/config";
-import { PortfoliosModule } from "./portfolios/portfolios.module";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as Joi from "joi";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { AuthModule } from "./auth/auth.module";
+import { UserEntity } from "./users/entities/user.entity";
 
 @Module({
     imports: [
@@ -27,8 +28,21 @@ import { TypeOrmModule } from "@nestjs/typeorm";
             },
             isGlobal: true
         }),
+        TypeOrmModule.forRootAsync({
+            useFactory: async (configService: ConfigService) => ({
+                type: "postgres",
+                host: configService.getOrThrow<string>("POSTGRES_HOST"),
+                port: +configService.getOrThrow<string>("POSTGRES_PORT"),
+                username: configService.getOrThrow<string>("POSTGRES_USER"),
+                password: configService.getOrThrow<string>("POSTGRES_PASSWORD"),
+                database: configService.getOrThrow<string>("POSTGRES_DB"),
+                entities: [UserEntity],
+                synchronize: true
+            }),
+            inject: [ConfigService]
+        }),
         PrognosesModule,
-        PortfoliosModule
+        AuthModule
     ],
     controllers: [AppController],
     providers: [AppService]
