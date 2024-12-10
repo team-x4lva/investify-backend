@@ -11,6 +11,12 @@ export class Security {
 
 export class PortfolioDto extends PortfolioEntity {
     @IsNumber()
+    id: number;
+
+    @IsString()
+    name: string;
+
+    @IsNumber()
     userId: number;
 
     // @IsArray()

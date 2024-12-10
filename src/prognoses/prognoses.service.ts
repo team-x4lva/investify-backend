@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Security } from "src/portfolios/dto/portfolio.dto";
 import { ScraperService } from "src/prognoses/scraper/scraper.service";
-import { GeminiAIService } from "./providers/gemini-ai.service";
+import { GeminiAIService } from "./ai/gemini-ai.service";
 
 @Injectable()
 export class PrognosesService {

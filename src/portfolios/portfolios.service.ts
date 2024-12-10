@@ -32,7 +32,7 @@ export class PortfoliosService {
         return this.portfolioRepository.delete(id);
     }
 
-    findByUserId(userId: number) {
-        return this.portfolioRepository.find({ where: { userId } });
+    async findByUserId(userId: number) {
+        return await this.portfolioRepository.find({ where: { userId } });
     }
 }
