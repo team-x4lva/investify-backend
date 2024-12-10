@@ -5,6 +5,7 @@ import { ScraperService } from "./prognoses/scraper/scraper.service";
 import { PrognosesModule } from "./prognoses/prognoses.module";
 import { PrognosesController } from "./prognoses/prognoses.controller";
 import { ConfigModule } from "@nestjs/config";
+import { PortfoliosModule } from './portfolios/portfolios.module';
 import * as Joi from "joi";
 
 @Module({
@@ -21,7 +22,8 @@ import * as Joi from "joi";
             },
             isGlobal: true
         }),
-        PrognosesModule
+        PrognosesModule,
+        PortfoliosModule
     ],
     controllers: [AppController],
     providers: [AppService]
