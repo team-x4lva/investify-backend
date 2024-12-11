@@ -14,5 +14,8 @@ export class SecurityEntity {
     ticker: string;
 
     @Column()
+    isProfitable: boolean;
+
+    @Column()
     volatility: number;
 }

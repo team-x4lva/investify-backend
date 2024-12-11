@@ -1,26 +1,34 @@
 import { Injectable } from "@nestjs/common";
 import { CreateSecurityDto } from "./dto/create-security.dto";
 import { UpdateSecurityDto } from "./dto/update-security.dto";
+import { Repository } from "typeorm";
+import { SecurityEntity } from "./entities/security.entity";
+import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class SecuritiesService {
-    create(createSecurityDto: CreateSecurityDto) {
-        return "This action adds a new security";
+    constructor(
+        @InjectRepository(SecurityEntity)
+        private readonly securityRepository: Repository<SecurityEntity>
+    ) {}
+
+    async create(createSecurityDto: CreateSecurityDto) {
+        return await this.securityRepository.save(createSecurityDto);
     }
 
-    findAll() {
-        return `This action returns all securities`;
+    async findAll() {
+        return await this.securityRepository.find();
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} security`;
+    async findOne(id: number) {
+        return await this.securityRepository.findOneBy({ id });
     }
 
-    update(id: number, updateSecurityDto: UpdateSecurityDto) {
-        return `This action updates a #${id} security`;
+    async update(id: number, updateSecurityDto: UpdateSecurityDto) {
+        return await this.securityRepository.update(id, updateSecurityDto);
     }
 
-    remove(id: number) {
-        return `This action removes a #${id} security`;
+    async remove(id: number) {
+        return await this.securityRepository.delete(id);
     }
 }
