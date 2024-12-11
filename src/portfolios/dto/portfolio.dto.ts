@@ -1,13 +1,6 @@
-import { IsArray, IsNumber, IsString, Length } from "class-validator";
+import { IsArray, IsNumber, IsString, ValidateNested } from "class-validator";
 import { PortfolioEntity } from "../entities/portfolio.entity";
-
-export class Security {
-    @IsString()
-    name: string;
-
-    @IsNumber()
-    share: number;
-}
+import { SecurityDto } from "src/securities/dto/security.dto";
 
 export class PortfolioDto extends PortfolioEntity {
     @IsNumber()
@@ -19,12 +12,11 @@ export class PortfolioDto extends PortfolioEntity {
     @IsNumber()
     userId: number;
 
-    // @IsArray()
-    // @ValidateNested({ each: true })
-    // securities: Security[];
+    @IsArray()
+    @ValidateNested({ each: true })
+    securities: SecurityDto[];
 
     @IsArray()
-    @IsString({ each: true })
-    @Length(1, 15, { each: true })
-    securitiesTickers: string[];
+    @IsNumber({}, { each: true })
+    share: number[];
 }

@@ -4,6 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { portfolioSchema } from "../../../prognoses/schemas/portfolio.schema";
 import { GeneratePortfolioPromptParameters } from "../../../prognoses/interfaces/generate-portfolio-prompt-parameters.interface";
 import { GENERATE_PORTFOLIO_PROMPT } from "src/constants/constants";
+import { simulationSchema } from "src/prognoses/schemas/simulation.schema";
 
 @Injectable()
 export class GeminiAIService {
@@ -17,6 +18,13 @@ export class GeminiAIService {
         generationConfig: {
             responseMimeType: "application/json",
             responseSchema: portfolioSchema
+        }
+    });
+    private readonly simulationModel = this.ai.getGenerativeModel({
+        model: this.configService.get<string>("GEMINI_MODEL"),
+        generationConfig: {
+            responseMimeType: "application/json",
+            responseSchema: simulationSchema
         }
     });
 

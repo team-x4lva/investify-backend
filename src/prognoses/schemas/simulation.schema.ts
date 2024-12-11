@@ -1,6 +1,6 @@
 import { Schema, SchemaType } from "@google/generative-ai";
 
-export const getSimulationSchema: Schema = {
+export const simulationSchema: Schema = {
     description: "Financial forecast and investment recommendations.",
     type: SchemaType.OBJECT,
     properties: {

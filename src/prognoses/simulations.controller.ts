@@ -11,7 +11,7 @@ export class SimulationsController {
         return this.simulationsServices.conductSimulation(
             conductSimulationDto.moneyAmount,
             conductSimulationDto.endDate,
-            conductSimulationDto.portfolio.securitiesTickers
+            conductSimulationDto.portfolioId
         );
     }
 }

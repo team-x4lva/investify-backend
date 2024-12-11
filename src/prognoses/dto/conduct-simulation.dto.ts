@@ -1,5 +1,4 @@
-import { IsDateString, IsNumber, ValidateNested } from "class-validator";
-import { PortfolioDto } from "src/portfolios/dto/portfolio.dto";
+import { IsDateString, IsNumber } from "class-validator";
 
 export class ConductSimulationDto {
     @IsNumber()
@@ -8,6 +7,6 @@ export class ConductSimulationDto {
     @IsDateString()
     endDate: Date;
 
-    @ValidateNested()
-    portfolio: PortfolioDto;
+    @IsNumber()
+    portfolioId: number;
 }

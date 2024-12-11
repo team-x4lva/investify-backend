@@ -12,13 +12,15 @@ export class SimulationsService {
     async conductSimulation(
         moneyAmount: number,
         endDate: Date,
-        securitiesTickers: string[]
+        portfolioId: number
     ) {
         const bestDepositRates =
             await this.scraperService.getBestDepositRates();
-        // Best securities sorted by sector (banki.ru)
-        // Recommendations (banki.ru)
 
-        //this.geminiAIService.
+        //this.geminiAIService
+
+        return {
+            bestDepositRates
+        };
     }
 }
