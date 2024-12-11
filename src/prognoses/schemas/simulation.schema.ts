@@ -200,6 +200,24 @@ export const simulationSchema: Schema = {
                 },
                 required: ["month", "advice"]
             }
+        },
+        graph_points: {
+            type: SchemaType.ARRAY,
+            description: "Points to illustrate the time-profit curve.",
+            items: {
+                type: SchemaType.OBJECT,
+                properties: {
+                    x: {
+                        type: SchemaType.STRING,
+                        description: "Date of intervals. Format: YYYY-MM-DD"
+                    },
+                    y: {
+                        type: SchemaType.NUMBER,
+                        description: "Profit at every interval."
+                    }
+                },
+                required: ["x", "y"]
+            }
         }
     },
     required: [
@@ -207,6 +225,7 @@ export const simulationSchema: Schema = {
         "risk_analysis",
         "asset_recommendations",
         "scenarios",
-        "timeline_guidance"
+        "timeline_guidance",
+        "graph_points"
     ]
 };
