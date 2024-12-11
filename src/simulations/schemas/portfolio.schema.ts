@@ -20,18 +20,18 @@ export const portfolioSchema: Schema = {
                     description:
                         "User-defined percentage allocations for each asset category.",
                     items: {
-                        type: SchemaType.OBJECT,
+                        type: SchemaType.ARRAY,
                         properties: {
                             category: {
                                 type: SchemaType.STRING,
                                 description:
-                                    "Asset category: Equities, Bonds, Currency, Gold, Oil, etc.",
+                                    "Asset category: Stocks, Bonds, Currency, Commodity, etc.",
                                 nullable: false
                             },
                             percentage: {
                                 type: SchemaType.NUMBER,
                                 description:
-                                    "User-specified percentage allocation, between 0 and 100.",
+                                    "User-specified percentage allocation, between 0 and 1 (with 2 decimal places).",
                                 nullable: true
                             }
                         },
@@ -73,13 +73,13 @@ export const portfolioSchema: Schema = {
                             category: {
                                 type: SchemaType.STRING,
                                 description:
-                                    "Asset category: Equities, Bonds, Currency, Gold, Oil, etc.",
+                                    "Asset category: Stocks, Bonds, Currency, Commodity, etc.",
                                 nullable: false
                             },
                             percentage: {
                                 type: SchemaType.NUMBER,
                                 description:
-                                    "Percentage allocation to the given category, between 0 and 100.",
+                                    "Allocation (share) to the given category, between 0 and 1 (with 2 decimal places).",
                                 nullable: false
                             },
                             instruments: {
@@ -87,10 +87,23 @@ export const portfolioSchema: Schema = {
                                 description:
                                     "List of specific instruments or tickers within this category.",
                                 items: {
-                                    type: SchemaType.STRING,
+                                    type: SchemaType.OBJECT,
                                     description:
-                                        "Ticker or name of the investment instrument.",
-                                    nullable: false
+                                        "Information on the concrete investment instrument.",
+                                    nullable: false,
+                                    properties: {
+                                        id: {
+                                            type: SchemaType.NUMBER,
+                                            nullable: false,
+                                            description:
+                                                "Id of the investing instrument"
+                                        },
+                                        percentage: {
+                                            type: SchemaType.NUMBER,
+                                            description:
+                                                "Allocation (share) to the given investing instrument (!) in its category, between 0 and 1 (with 2 decimal places)."
+                                        }
+                                    }
                                 }
                             }
                         },

@@ -23,26 +23,33 @@ In addition to the forecast, provide the points for the graph in the specified f
 
 Ensure that the recommendations align with the user's preferences and market trends. Focus on clear, actionable advice tied to the investment period and potential market events.`;
 
-export const GENERATE_PORTFOLIO_PROMPT = `Generate an investment portfolio tailored to a selected strategy and specified allocation preferences.
+export const GENERATE_PORTFOLIO_PROMPT = `Generate an investment portfolio tailored to a selected strategy and specified allocation preferences. You should choose investing instruments from the dataset supplied to you, which is an array of objects with the following structure:
+{
+    id: number;
+    name: string;
+    ticker: string;
+    category: string;
+    isProfitable: boolean;
+    volatility: number;
+}
+
+You should base your answer on the user preferences, as well as on the properties of the each investing instrument supplied to you in the dataset.
 
 Key Parameters: 
   Start Date: {startDate} 
   End Date: {endDate} 
   Money Amount: {moneyAmount}
+  Desired degree of risk (0 - no risk at all, 1 - maximum risk): {volatility}
 
-Strategy Type:
-  Volatility: {volatility}
+Conservative (0 - 0.3 risk degree): Focus on capital preservation with low risk and steady returns. Allocate a higher percentage to bonds and stable instruments.
+Balanced (0.3 - 0.7 risk degree): Aim for moderate risk and returns by blending equities and bonds, complemented with smaller portions of alternative assets.
+Aggressive (0.7 - 1 risk degree): Prioritize growth with high risk and potential for high returns, focusing on equities and alternative investments.
 
-Conservative (0 - 0.3 volatility): Focus on capital preservation with low risk and steady returns. Allocate a higher percentage to bonds and stable instruments.
-Balanced (0.3 - 0.7 volatility): Aim for moderate risk and returns by blending equities and bonds, complemented with smaller portions of alternative assets.
-Aggressive (0.7 - 1 volatility): Prioritize growth with high risk and potential for high returns, focusing on equities and alternative investments.
-
-Asset Categories: {desiredInstrumentsCategories} ()
+Asset Categories: {desiredInstrumentsCategories}
 Equities (Stocks): Include large-cap, mid-cap, and small-cap stocks diversified across industries and geographies, with a preference for Russian companies.
 Bonds: Include government bonds, corporate bonds, and municipal bonds with varying durations, prioritizing Russian issuers.
 Currency: Incorporate foreign exchange options for diversification and hedging.
-Gold: Provide stability and hedge against inflation.
-Oil: Exposure to energy markets, with an emphasis on Russian producers where applicable.
+
 Generate percentage allocations for chosen asset category based on the selected strategy and user preferences.
 
 Users can specify desired percentages for each category or follow default allocations aligned with the strategy.

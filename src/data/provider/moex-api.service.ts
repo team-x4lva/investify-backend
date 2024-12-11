@@ -131,7 +131,6 @@ export class MoexApiService {
             )
         );
 
-        let i = 0;
         for (const share of shares) {
             entities.push({
                 ticker: share[0],
@@ -140,7 +139,6 @@ export class MoexApiService {
                 isProfitable: profitableSecurities.includes(share[0]),
                 volatility: 0.5
             });
-            console.log(++i);
         }
 
         console.log(entities);
