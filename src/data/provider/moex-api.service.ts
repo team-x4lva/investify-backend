@@ -89,7 +89,8 @@ export class MoexApiService {
             const slope = await this.calculateSlope(x, prices);
 
             const avgPrice = prices.reduce((acc, val) => acc + val, 0) / n;
-            const variance = prices.reduce((acc, p) => acc + (p - avgPrice) ** 2, 0) / n;
+            const variance =
+                prices.reduce((acc, p) => acc + (p - avgPrice) ** 2, 0) / n;
             const stdDev = variance > 0 ? Math.sqrt(variance) : 0;
 
             if (slope > 0.01 && stdDev < 0.1 * avgPrice) {
