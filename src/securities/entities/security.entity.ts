@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { SecurityCategories } from "../enums/security-categories.enum";
 
 @Entity({
     name: "securities"
@@ -12,6 +13,12 @@ export class SecurityEntity {
 
     @Column()
     ticker: string;
+
+    @Column({
+        type: "enum",
+        enum: SecurityCategories
+    })
+    category: SecurityCategories;
 
     @Column()
     isProfitable: boolean;
