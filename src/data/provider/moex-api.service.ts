@@ -68,7 +68,6 @@ export class MoexApiService {
             });
             historicalData[security] = prices;
         }
-
         return historicalData;
     }
 
@@ -131,13 +130,14 @@ export class MoexApiService {
             )
         );
 
+        const volatilities = await this.calculateVolatility("shares");
         for (const share of shares) {
             entities.push({
                 ticker: share[0],
                 name: share[1],
                 category: SecurityCategories.STOCK,
                 isProfitable: profitableSecurities.includes(share[0]),
-                volatility: 0.5
+                volatility: volatilities[share]
             });
         }
 
@@ -159,17 +159,33 @@ export class MoexApiService {
             )
         );
 
+        const volatilities = await this.calculateVolatility("bonds");
         for (const bond of bonds) {
             entities.push({
                 ticker: bond[0],
                 name: bond[1],
                 category: SecurityCategories.STOCK,
                 isProfitable: profitableSecurities.includes(bond[0]),
-                volatility: 0.67
+                volatility: volatilities[bond]
             });
         }
 
         console.log(entities);
         await this.securitiesService.bulkUpdate(entities);
+    }
+
+    async calculateVolatility(param: string) {
+        const securities = await this.getMoexSecuritiesIds(param);
+        const prices = await this.getHistoricalData(param, securities);
+        const volatilities = {};
+        for (const security of securities) {
+            const returns = prices[security].slice(1).map((price, index) => 
+                Math.log(price / prices[security][index])
+            );
+            const meanReturn = returns.reduce((sum, r) => sum + r, 0) / returns.length;
+            const variance = returns.reduce((sum, r) => sum + Math.pow(r - meanReturn, 2), 0) / (returns.length - 1);
+            volatilities[security] = (Math.sqrt(variance));
+        }
+        return volatilities;
     }
 }

@@ -30,7 +30,8 @@ export class SecurityEntity {
     @Column({
         type: "decimal",
         precision: 3,
-        scale: 2
+        scale: 2,
+        nullable: true
     })
     volatility: number;
 }
