@@ -1,9 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import * as cheerio from "cheerio";
 import axios from "axios";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class ScraperService {
+    constructor(private readonly configService: ConfigService) {}
+
     private depositRatesEndpoint = "http://www.sravni.ru/vklady/";
     private recommendationsEndpoint =
         "http://www.banki.ru/investment/analitika/";
@@ -77,7 +80,7 @@ export class ScraperService {
         );
 
         // Yes
-        const apiKey = "abd0c7e3909f426982e9e4b7b74ffbc8";
+        const apiKey = this.configService.get<string>("NEWS_API_KEY");
         const newsEndpoint = `http://newsapi.org/v2/everything?q=(политика OR экономика) AND NOT спорт&from=${past}&to=${now}&sortBy=popularity&language=ru&apiKey=${apiKey}`;
         const response = await axios.get(newsEndpoint);
 

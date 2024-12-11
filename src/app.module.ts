@@ -28,7 +28,8 @@ import { redisStore } from "cache-manager-redis-yet";
                 POSTGRES_USER: Joi.string(),
                 POSTGRES_DB: Joi.string(),
                 REDIS_HOST: Joi.string().hostname(),
-                REDIS_PORT: Joi.number().port().default(6379)
+                REDIS_PORT: Joi.number().port().default(6379),
+                NEWS_API_KEY: Joi.string().token()
             }),
             validationOptions: {
                 allowUnknown: true,
