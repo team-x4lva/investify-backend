@@ -1,12 +1,16 @@
 import { Injectable, Logger } from "@nestjs/common";
 import axios from "axios";
-import { SecuritiesService } from '../../securities/securities.service';
-import { Cron } from '@nestjs/schedule';
+import { SecuritiesService } from "../../securities/securities.service";
+import { Cron } from "@nestjs/schedule";
+import { SecurityCategories } from "src/securities/enums/security-categories.enum";
+import { CreateSecurityDto } from "src/securities/dto/create-security.dto";
 
 @Injectable()
 export class MoexApiService {
     constructor(private readonly securitiesService: SecuritiesService) {}
+
     private readonly logger = new Logger(MoexApiService.name);
+
     async getDataByDate(security: string, from: string, till: string) {
         const response = await axios.get(
             `https://iss.moex.com/iss/history/engines/stock/markets/shares/securities/${security}.json?from=${from}&till=${till}&start=0`
@@ -29,17 +33,25 @@ export class MoexApiService {
         return result;
     }
 
-    async getMoexSecurities(param: string) {
+    async getMoexSecuritiesIds(param: string) {
         const response = await axios.get(
             `https://iss.moex.com/iss/engines/stock/markets/${param}/securities.json?securities.columns=SECID,SHORTNAME`
         );
         const data = response.data;
-        const securities = [];
+        const securitiesIds = [];
         data.securities.data.forEach((element) => {
-            securities.push(element[0]);
+            securitiesIds.push(element[0]);
         });
 
-        return securities;
+        return securitiesIds;
+    }
+
+    async getMoexSecurities(param: string) {
+        const response = await axios.get(
+            `https://iss.moex.com/iss/engines/stock/markets/${param}/securities.json?securities.columns=SECID,SHORTNAME`
+        );
+
+        return response.data.securities.data;
     }
 
     async getHistoricalData(param: string, securities: string[]) {
@@ -101,14 +113,65 @@ export class MoexApiService {
                 profitableSecurities.push(security);
             }
         }
+
         return profitableSecurities;
     }
 
-    @Cron(' * * * 1 * *')
-    async fillDataBase() {
+    @Cron("* * * 1 * *")
+    async updateSharesLocalData() {
+        console.log("hello");
         const shares = await this.getMoexSecurities("shares");
+
+        const entities: CreateSecurityDto[] = [];
+        const profitableSecurities = await this.selectProfitableSecurities(
+            shares.map((share) => share[0]),
+            await this.getHistoricalData(
+                "shares",
+                shares.map((share) => share[0])
+            )
+        );
+
+        let i = 0;
+        for (const share of shares) {
+            entities.push({
+                ticker: share[0],
+                name: share[1],
+                category: SecurityCategories.STOCK,
+                isProfitable: profitableSecurities.includes(share[0]),
+                volatility: 0.5
+            });
+            console.log(++i);
+        }
+
+        console.log(entities);
+        await this.securitiesService.bulkUpdate(entities);
+    }
+
+    @Cron("* * * 1 * *")
+    async updateBondsLocalData() {
+        console.log("hello 2");
         const bonds = await this.getMoexSecurities("bonds");
-        this.securitiesService.create(...shares);
-        this.securitiesService.create(...bonds);
+
+        const entities: CreateSecurityDto[] = [];
+        const profitableSecurities = await this.selectProfitableSecurities(
+            bonds.map((share) => share[0]),
+            await this.getHistoricalData(
+                "bonds",
+                bonds.map((share) => share[0])
+            )
+        );
+
+        for (const bond of bonds) {
+            entities.push({
+                ticker: bond[0],
+                name: bond[1],
+                category: SecurityCategories.STOCK,
+                isProfitable: profitableSecurities.includes(bond[0]),
+                volatility: 0.67
+            });
+        }
+
+        console.log(entities);
+        await this.securitiesService.bulkUpdate(entities);
     }
 }

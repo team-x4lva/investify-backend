@@ -27,7 +27,7 @@ export class SecuritiesController {
 
     @Get(":id")
     findOne(@Param("id") id: string) {
-        return this.securitiesService.findOne(+id);
+        return this.securitiesService.findOne(id);
     }
 
     @Patch(":id")

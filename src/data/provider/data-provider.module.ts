@@ -5,9 +5,7 @@ import { SecuritiesModule } from "src/securities/securities.module";
 import { ScheduleModule } from "@nestjs/schedule";
 
 @Module({
-    imports: [SecuritiesModule,
-        ScheduleModule.forRoot()
-    ],
+    imports: [SecuritiesModule, ScheduleModule.forRoot()],
     providers: [ScraperService, MoexApiService],
     exports: [ScraperService, MoexApiService]
 })

@@ -1,18 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 import { SecurityCategories } from "../enums/security-categories.enum";
 
 @Entity({
     name: "securities"
 })
 export class SecurityEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     id: number;
+
+    @Column({
+        unique: true
+    })
+    ticker: string;
 
     @Column()
     name: string;
-
-    @Column()
-    ticker: string;
 
     @Column({
         type: "enum",
@@ -20,9 +22,15 @@ export class SecurityEntity {
     })
     category: SecurityCategories;
 
-    @Column()
+    @Column({
+        name: "is_profitable"
+    })
     isProfitable: boolean;
 
-    @Column()
+    @Column({
+        type: "decimal",
+        precision: 3,
+        scale: 2
+    })
     volatility: number;
 }

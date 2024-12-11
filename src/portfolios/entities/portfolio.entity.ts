@@ -19,7 +19,9 @@ export class PortfolioEntity {
     @Column()
     name: string;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     userId: number;
 
     @ManyToOne(() => UserEntity, (user) => user.portfolios)

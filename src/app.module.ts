@@ -1,7 +1,6 @@
 import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { SimulationsModule } from "./prognoses/simulations.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as Joi from "joi";
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -11,6 +10,8 @@ import { PortfoliosModule } from "./portfolios/portfolios.module";
 import { PortfolioEntity } from "./portfolios/entities/portfolio.entity";
 import { SecuritiesModule } from "./securities/securities.module";
 import { SecurityEntity } from "./securities/entities/security.entity";
+import { SimulationsModule } from "./simulations/simulations.module";
+import { DataProviderModule } from "./data/provider/data-provider.module";
 
 @Module({
     imports: [
@@ -47,7 +48,8 @@ import { SecurityEntity } from "./securities/entities/security.entity";
         SimulationsModule,
         AuthModule,
         PortfoliosModule,
-        SecuritiesModule
+        SecuritiesModule,
+        DataProviderModule
     ],
     controllers: [AppController],
     providers: [AppService]

@@ -20,12 +20,16 @@ export class SecuritiesService {
         return await this.securityRepository.find();
     }
 
-    async findOne(id: number) {
-        return await this.securityRepository.findOneBy({ id });
+    async findOne(ticker: string) {
+        return await this.securityRepository.findOneBy({ ticker });
     }
 
     async update(id: number, updateSecurityDto: UpdateSecurityDto) {
         return await this.securityRepository.update(id, updateSecurityDto);
+    }
+
+    async bulkUpdate(updateSecurityDtos: UpdateSecurityDto[]) {
+        return await this.securityRepository.save(updateSecurityDtos);
     }
 
     async remove(id: number) {

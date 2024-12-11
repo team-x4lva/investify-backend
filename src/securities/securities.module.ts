@@ -8,6 +8,6 @@ import { SecurityEntity } from "./entities/security.entity";
     imports: [TypeOrmModule.forFeature([SecurityEntity])],
     controllers: [SecuritiesController],
     providers: [SecuritiesService],
-    exports: [SecuritiesService],
+    exports: [SecuritiesService]
 })
 export class SecuritiesModule {}

@@ -1,10 +1,10 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { portfolioSchema } from "../../../prognoses/schemas/portfolio.schema";
-import { GeneratePortfolioPromptParameters } from "../../../prognoses/interfaces/generate-portfolio-prompt-parameters.interface";
+import { portfolioSchema } from "../../../simulations/schemas/portfolio.schema";
+import { GeneratePortfolioPromptParameters } from "../../../simulations/interfaces/generate-portfolio-prompt-parameters.interface";
 import { GENERATE_PORTFOLIO_PROMPT } from "src/constants/constants";
-import { simulationSchema } from "src/prognoses/schemas/simulation.schema";
+import { simulationSchema } from "src/simulations/schemas/simulation.schema";
 
 @Injectable()
 export class GeminiAIService {
