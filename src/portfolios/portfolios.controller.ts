@@ -61,7 +61,7 @@ export class PortfoliosController {
             desiredInstrumentsCategories:
                 generatePortfolioDto.desiredInstrumentsCategories,
             volatility: generatePortfolioDto.volatility,
-            dataset: await this.securitiesService.getProfitable()
+            dataset: (await this.securitiesService.getProfitable()).toString()
         });
     }
 }

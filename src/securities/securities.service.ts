@@ -21,11 +21,13 @@ export class SecuritiesService {
     }
 
     async getProfitable() {
-        return await this.securityRepository.find({
+        const entities = await this.securityRepository.find({
             where: {
                 isProfitable: true
             }
         });
+
+        return entities.map((entity) => JSON.stringify(entity));
     }
 
     async findOne(ticker: string) {

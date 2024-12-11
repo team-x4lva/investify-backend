@@ -37,15 +37,4 @@ export class PortfoliosService {
     async findByUserId(userId: number) {
         return await this.portfolioRepository.find({ where: { userId } });
     }
-
-    // async generatePortfolio(generatePortfolioDto: GeneratePortfolioDto) {
-    //     return await this.geminiAIService.generatePortfolio({
-    //         moneyAmount: generatePortfolioDto.moneyAmount,
-    //         startDate: new Date(),
-    //         endDate: generatePortfolioDto.endDate,
-    //         desiredInstrumentsCategories:
-    //             generatePortfolioDto.desiredInstrumentsCategories,
-    //         volatility: generatePortfolioDto.volatility
-    //     });
-    // }
 }
