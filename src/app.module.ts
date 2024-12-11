@@ -10,6 +10,7 @@ import { UserEntity } from "./users/entities/user.entity";
 import { PortfoliosModule } from "./portfolios/portfolios.module";
 import { PortfolioEntity } from "./portfolios/entities/portfolio.entity";
 import { SecuritiesModule } from "./securities/securities.module";
+import { SecurityEntity } from "./securities/entities/security.entity";
 
 @Module({
     imports: [
@@ -38,7 +39,7 @@ import { SecuritiesModule } from "./securities/securities.module";
                 username: configService.getOrThrow<string>("POSTGRES_USER"),
                 password: configService.getOrThrow<string>("POSTGRES_PASSWORD"),
                 database: configService.getOrThrow<string>("POSTGRES_DB"),
-                entities: [UserEntity, PortfolioEntity],
+                entities: [UserEntity, PortfolioEntity, SecurityEntity],
                 synchronize: true
             }),
             inject: [ConfigService]

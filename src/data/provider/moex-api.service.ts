@@ -5,7 +5,7 @@ import axios from "axios";
 export class MoexApiService {
     async getDataByDate(security: string, from: string, till: string) {
         const response = await axios.get(
-            `https://iss.moex.com/iss/history/engines/stock/markets/shares/boards/TQBR/securities/${security}.json?from=${from}&till=${till}&start=0`
+            `https://iss.moex.com/iss/history/engines/stock/markets/shares/securities/${security}.json?from=${from}&till=${till}&start=0`
         );
         const data = response.data;
         const openIndex = +data.history.columns.indexOf("OPEN");
@@ -25,19 +25,20 @@ export class MoexApiService {
         return result;
     }
 
-    async getMoexSecurities(securitiesAmount: number = 300) {
+    async getMoexSecurities() {
         const response = await axios.get(
-            "https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json?securities.columns=SECID,SHORTNAME"
+            "https://iss.moex.com/iss/engines/stock/markets/shares/securities.json?securities.columns=SECID,SHORTNAME"
         );
         const data = response.data;
         const securities = [];
         data.securities.data.forEach((element) => {
             securities.push(element[0]);
         });
+
         return securities;
     }
 
-    async getHistoricalData(securities: string[], daysAmount: number = 100) {
+    async getHistoricalData(securities: string[]) {
         const historicalData = {};
         for (const security of securities) {
             const response = await axios.get(
@@ -51,9 +52,10 @@ export class MoexApiService {
             });
             historicalData[security] = prices;
         }
+
         return historicalData;
-    }   
-    
+    }
+
     async calculateSlope(x: number[], y: number[]) {
         const n = x.length;
         if (n <= 1) {
@@ -66,14 +68,17 @@ export class MoexApiService {
         const sumXSquared = x.reduce((acc, val) => acc + val ** 2, 0);
 
         const slope = (n * sumXY - sumX * sumY) / (n * sumXSquared - sumX ** 2);
+
         return slope;
     }
 
-    async selectProfitableSecurities(securities: string[], historicalData: any) {
+    async selectProfitableSecurities(
+        securities: string[],
+        historicalData: any
+    ) {
         const profitableSecurities: string[] = [];
 
         for (const security of securities) {
-        
             const prices = historicalData[security];
             const n = prices.length;
             if (n <= 1) {
@@ -84,7 +89,8 @@ export class MoexApiService {
             const slope = await this.calculateSlope(x, prices);
 
             const avgPrice = prices.reduce((acc, val) => acc + val, 0) / n;
-            const variance = prices.reduce((acc, p) => acc + (p - avgPrice) ** 2, 0) / n;
+            const variance =
+                prices.reduce((acc, p) => acc + (p - avgPrice) ** 2, 0) / n;
             const stdDev = variance > 0 ? Math.sqrt(variance) : 0;
 
             if (slope > 0.01 && stdDev < 0.1 * avgPrice) {
