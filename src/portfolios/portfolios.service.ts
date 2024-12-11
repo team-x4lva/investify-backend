@@ -5,7 +5,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { PortfolioEntity } from "./entities/portfolio.entity";
 import { Repository } from "typeorm";
 import { GeminiAIService } from "src/data/processor/ai/gemini-ai.service";
-import { SecurityEntity } from "src/securities/entities/security.entity";
 import { SecuritiesService } from "src/securities/securities.service";
 
 @Injectable()

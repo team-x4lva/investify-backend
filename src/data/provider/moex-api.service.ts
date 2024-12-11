@@ -5,11 +5,12 @@ import { Cron } from "@nestjs/schedule";
 import { SecurityCategories } from "src/securities/enums/security-categories.enum";
 import { CreateSecurityDto } from "src/securities/dto/create-security.dto";
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
-import { CacheStore } from "@nestjs/cache-manager/";  
+import { CacheStore } from "@nestjs/cache-manager/";
 
 @Injectable()
 export class MoexApiService {
-    constructor(private readonly securitiesService: SecuritiesService,
+    constructor(
+        private readonly securitiesService: SecuritiesService,
         @Inject(CACHE_MANAGER) private readonly cacheManager: CacheStore
     ) {}
 
@@ -102,11 +103,10 @@ export class MoexApiService {
         securities: string[],
         historicalData: any
     ) {
-
         const cachedData = await this.cacheManager.get("profitableSecurities");
         if (cachedData) {
             return cachedData;
-        } 
+        }
 
         const profitableSecurities: string[] = [];
 
@@ -129,7 +129,11 @@ export class MoexApiService {
                 profitableSecurities.push(security);
             }
         }
-        await this.cacheManager.set("profitableSecurities", profitableSecurities, 15*60*1000);
+        await this.cacheManager.set(
+            "profitableSecurities",
+            profitableSecurities,
+            15 * 60 * 1000
+        );
         return profitableSecurities;
     }
 
@@ -154,7 +158,7 @@ export class MoexApiService {
                 ticker: share[0],
                 name: share[1],
                 category: SecurityCategories.STOCK,
-                isProfitable: profitableSecurities.includes(share[0]),
+                isProfitable: (profitableSecurities as any).includes(share[0]),
                 volatility: volatilities[share[0]]
             });
         }
@@ -184,7 +188,7 @@ export class MoexApiService {
                 ticker: bond[0],
                 name: bond[1],
                 category: SecurityCategories.BOND,
-                isProfitable: profitableSecurities.includes(bond[0]),
+                isProfitable: (profitableSecurities as any).includes(bond[0]),
                 volatility: volatilities[bond[0]]
             });
         }
