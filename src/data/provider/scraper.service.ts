@@ -67,4 +67,13 @@ export class ScraperService {
         console.log(stocks);
         return stocks;
     }
+
+    async getNews() {
+        const now = new Date();
+        const past = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+        const apiKey = "abd0c7e3909f426982e9e4b7b74ffbc8";
+        const newsEndpoint = `http://newsapi.org/v2/everything?q=(политика OR экономика) AND NOT спорт&from=${past}&to=${now}&sortBy=popularity&language=ru&apiKey=${apiKey}`;
+        const response = await axios.get(newsEndpoint);
+        return response.data;
+    }
 }
