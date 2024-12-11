@@ -62,7 +62,7 @@ Where possible, prioritize instruments linked to Russian companies or issuers.
 
 Translate response text to Russian. Provide the response in JSON (but without the \`\`\`json ...\`\`\` wrapping).
 
-Use the following dataset: {dataset}.`;
+Use the following dataset of news: {articles} to analyze the political-economic situation`;
 
 export const IS_PUBLIC_KEY = "isPublic";
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
