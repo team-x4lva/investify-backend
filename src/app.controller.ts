@@ -1,19 +1,13 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Post } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { MoexApiService } from "./data/provider/moex-api.service";
 
 @Controller()
 export class AppController {
-    constructor(
-        private readonly appService: AppService,
-        private readonly moexApiService: MoexApiService
-    ) {}
+    constructor(private readonly appService: AppService) {}
 
-    @Get()
-    getsdf() {
-        this.moexApiService.updateSharesLocalData();
-
-        return "Hello World!";
-        //return this.moexApiService.calculateVolatility("shares");
+    @Post("aggregate-moex")
+    aggregateMoexData() {
+        return this.appService.forceUpdateMoexAggregatedData();
     }
 }

@@ -118,7 +118,8 @@ export class MoexApiService {
 
     @Cron("* * * 1 * *")
     async updateSharesLocalData() {
-        console.log("hello");
+        console.log("Began aggregating shares data...");
+
         const shares = await this.getMoexSecurities("shares");
 
         const entities: CreateSecurityDto[] = [];
@@ -137,7 +138,7 @@ export class MoexApiService {
                 name: share[1],
                 category: SecurityCategories.STOCK,
                 isProfitable: profitableSecurities.includes(share[0]),
-                volatility: volatilities[share[1]]
+                volatility: volatilities[share[0]]
             });
         }
 
@@ -147,7 +148,8 @@ export class MoexApiService {
 
     @Cron("* * * 1 * *")
     async updateBondsLocalData() {
-        console.log("hello 2");
+        console.log("Began aggregating bonds data...");
+
         const bonds = await this.getMoexSecurities("bonds");
 
         const entities: CreateSecurityDto[] = [];
@@ -166,7 +168,7 @@ export class MoexApiService {
                 name: bond[1],
                 category: SecurityCategories.STOCK,
                 isProfitable: profitableSecurities.includes(bond[0]),
-                volatility: volatilities[bond]
+                volatility: volatilities[bond[0]]
             });
         }
 
