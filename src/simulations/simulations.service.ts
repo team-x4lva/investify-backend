@@ -1,8 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { GeminiAIService } from "../data/processor/ai/gemini-ai.service";
 import { ScraperService } from "src/data/provider/scraper.service";
-import { portfolioItem, SimulationPromptParameters } from "./interfaces/simulation-prompt-parameters.interface";
-import { PortfoliosService } from '../portfolios/portfolios.service';
+import {
+    portfolioItem,
+    SimulationPromptParameters
+} from "./interfaces/simulation-prompt-parameters.interface";
+import { PortfoliosService } from "../portfolios/portfolios.service";
 
 @Injectable()
 export class SimulationsService {
@@ -19,11 +22,11 @@ export class SimulationsService {
     ) {
         const portfolio = await this.portfoliosService.findOne(portfolioId);
         const items: portfolioItem[] = [];
-        for(let i = 0; i < portfolio.securities.length; i++) {
+        for (let i = 0; i < portfolio.securities.length; i++) {
             items.push({
                 security: portfolio.securities[i],
                 share: portfolio.share[i]
-            })
+            });
         }
         const bestDepositRates =
             await this.scraperService.getBestDepositRates();
@@ -32,10 +35,12 @@ export class SimulationsService {
             startDate: new Date(),
             endDate: endDate,
             portfolio: items
-        }
-        const result = await this.geminiAIService.generateSimulation(promptParameters);
+        };
+        const result =
+            await this.geminiAIService.generateSimulation(promptParameters);
         return {
-            bestDepositRates, result
+            bestDepositRates,
+            result
         };
     }
 }

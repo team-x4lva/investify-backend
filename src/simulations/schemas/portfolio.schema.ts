@@ -5,53 +5,6 @@ export const portfolioSchema: Schema = {
         "Structured investment portfolio tailored to a selected strategy and user preferences.",
     type: SchemaType.OBJECT,
     properties: {
-        userPreferences: {
-            type: SchemaType.OBJECT,
-            description: "User-defined inputs for portfolio generation.",
-            properties: {
-                strategy: {
-                    type: SchemaType.STRING,
-                    description:
-                        "The investment strategy selected by the user: Conservative, Balanced, or Aggressive.",
-                    nullable: false
-                },
-                allocationPreferences: {
-                    type: SchemaType.ARRAY,
-                    description:
-                        "User-defined percentage allocations for each asset category.",
-                    items: {
-                        type: SchemaType.OBJECT,
-                        properties: {
-                            category: {
-                                type: SchemaType.STRING,
-                                description:
-                                    "Asset category: Stocks, Bonds, Currency, Commodity, etc.",
-                                nullable: false
-                            },
-                            percentage: {
-                                type: SchemaType.NUMBER,
-                                description:
-                                    "User-specified percentage allocation, between 0 and 1 (with 2 decimal places).",
-                                nullable: false
-                            }
-                        },
-                        required: ["category"]
-                    }
-                },
-                preferredInstruments: {
-                    type: SchemaType.ARRAY,
-                    description:
-                        "Specific instruments or asset types preferred by the user.",
-                    items: {
-                        type: SchemaType.STRING,
-                        description:
-                            "User-preferred instruments (e.g., Russian companies, specific bonds).",
-                        nullable: true
-                    }
-                }
-            },
-            required: ["strategy"]
-        },
         generatedPortfolio: {
             type: SchemaType.OBJECT,
             description:

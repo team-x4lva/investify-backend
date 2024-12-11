@@ -20,6 +20,12 @@ export class SecuritiesService {
         return await this.securityRepository.find();
     }
 
+    async isMoexDataAvailable() {
+        const amount = await this.securityRepository.count();
+
+        return amount === 0 ? false : true;
+    }
+
     async getProfitable() {
         const entities = await this.securityRepository.find({
             where: {
