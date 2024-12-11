@@ -142,7 +142,7 @@ export class MoexApiService {
             });
         }
 
-        console.log(entities);
+        console.log("shares: ", entities);
         await this.securitiesService.bulkUpdate(entities);
     }
 
@@ -154,10 +154,10 @@ export class MoexApiService {
 
         const entities: CreateSecurityDto[] = [];
         const profitableSecurities = await this.selectProfitableSecurities(
-            bonds.map((share) => share[0]),
+            bonds.map((bond) => bond[0]),
             await this.getHistoricalData(
                 "bonds",
-                bonds.map((share) => share[0])
+                bonds.map((bond) => bond[0])
             )
         );
 
@@ -166,13 +166,13 @@ export class MoexApiService {
             entities.push({
                 ticker: bond[0],
                 name: bond[1],
-                category: SecurityCategories.STOCK,
+                category: SecurityCategories.BOND,
                 isProfitable: profitableSecurities.includes(bond[0]),
                 volatility: volatilities[bond[0]]
             });
         }
 
-        console.log(entities);
+        console.log("bonds: ", entities);
         await this.securitiesService.bulkUpdate(entities);
     }
 

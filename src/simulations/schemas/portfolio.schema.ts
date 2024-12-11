@@ -51,6 +51,12 @@ export const portfolioSchema: Schema = {
                                             description:
                                                 "Id of the investing instrument"
                                         },
+                                        name: {
+                                            type: SchemaType.STRING,
+                                            nullable: false,
+                                            description:
+                                                "Name of the investing instrument"
+                                        },
                                         percentage: {
                                             type: SchemaType.NUMBER,
                                             description:
@@ -75,5 +81,5 @@ export const portfolioSchema: Schema = {
             required: ["strategy", "allocation", "rationale"]
         }
     },
-    required: ["userPreferences", "generatedPortfolio"]
+    required: ["generatedPortfolio"]
 };
