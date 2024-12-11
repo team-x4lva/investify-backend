@@ -7,6 +7,7 @@ import { SecurityEntity } from "./entities/security.entity";
 @Module({
     imports: [TypeOrmModule.forFeature([SecurityEntity])],
     controllers: [SecuritiesController],
-    providers: [SecuritiesService]
+    providers: [SecuritiesService],
+    exports: [SecuritiesService],
 })
 export class SecuritiesModule {}

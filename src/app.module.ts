@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { PrognosesModule } from "./prognoses/prognoses.module";
+import { SimulationsModule } from "./prognoses/simulations.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as Joi from "joi";
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -44,7 +44,7 @@ import { SecurityEntity } from "./securities/entities/security.entity";
             }),
             inject: [ConfigService]
         }),
-        PrognosesModule,
+        SimulationsModule,
         AuthModule,
         PortfoliosModule,
         SecuritiesModule
