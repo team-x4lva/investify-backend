@@ -1,13 +1,17 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Inject, Injectable, Logger } from "@nestjs/common";
 import axios from "axios";
 import { SecuritiesService } from "../../securities/securities.service";
 import { Cron } from "@nestjs/schedule";
 import { SecurityCategories } from "src/securities/enums/security-categories.enum";
 import { CreateSecurityDto } from "src/securities/dto/create-security.dto";
+import { CACHE_MANAGER } from "@nestjs/cache-manager";
+import { CacheStore } from "@nestjs/cache-manager/";  
 
 @Injectable()
 export class MoexApiService {
-    constructor(private readonly securitiesService: SecuritiesService) {}
+    constructor(private readonly securitiesService: SecuritiesService,
+        @Inject(CACHE_MANAGER) private readonly cacheManager: CacheStore
+    ) {}
 
     private readonly logger = new Logger(MoexApiService.name);
 
@@ -91,6 +95,12 @@ export class MoexApiService {
         securities: string[],
         historicalData: any
     ) {
+
+        const cachedData = await this.cacheManager.get("profitableSecurities");
+        if (cachedData) {
+            return cachedData;
+        } 
+
         const profitableSecurities: string[] = [];
 
         for (const security of securities) {
@@ -112,7 +122,7 @@ export class MoexApiService {
                 profitableSecurities.push(security);
             }
         }
-
+        await this.cacheManager.set("profitableSecurities", profitableSecurities, 15*60*1000);
         return profitableSecurities;
     }
 

@@ -12,6 +12,8 @@ import { SecuritiesModule } from "./securities/securities.module";
 import { SecurityEntity } from "./securities/entities/security.entity";
 import { SimulationsModule } from "./simulations/simulations.module";
 import { DataProviderModule } from "./data/provider/data-provider.module";
+import { CacheModule } from "@nestjs/cache-manager";
+import { redisStore } from "cache-manager-redis-yet";
 
 @Module({
     imports: [
@@ -24,7 +26,9 @@ import { DataProviderModule } from "./data/provider/data-provider.module";
                 POSTGRES_PORT: Joi.number().port().default(5432),
                 POSTGRES_PASSWORD: Joi.string(),
                 POSTGRES_USER: Joi.string(),
-                POSTGRES_DB: Joi.string()
+                POSTGRES_DB: Joi.string(),
+                REDIS_HOST: Joi.string().hostname(),
+                REDIS_PORT: Joi.number().port().default(6379)
             }),
             validationOptions: {
                 allowUnknown: true,
@@ -42,6 +46,18 @@ import { DataProviderModule } from "./data/provider/data-provider.module";
                 database: configService.getOrThrow<string>("POSTGRES_DB"),
                 entities: [UserEntity, PortfolioEntity, SecurityEntity],
                 synchronize: true
+            }),
+            inject: [ConfigService]
+        }),
+        CacheModule.registerAsync({
+            isGlobal: true,
+            useFactory: async (configService: ConfigService) => ({
+                store: await redisStore({
+                    socket: {
+                        host: configService.getOrThrow<string>("REDIS_HOST"),
+                        port: configService.getOrThrow<number>("REDIS_PORT")
+                    }
+                })
             }),
             inject: [ConfigService]
         }),
