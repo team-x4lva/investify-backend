@@ -37,7 +37,9 @@ export class SecuritiesService {
     }
 
     async bulkUpdate(updateSecurityDtos: UpdateSecurityDto[]) {
-        return await this.securityRepository.save(updateSecurityDtos);
+        return await this.securityRepository.upsert(updateSecurityDtos, [
+            "ticker"
+        ]);
     }
 
     async remove(id: number) {

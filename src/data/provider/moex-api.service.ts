@@ -137,7 +137,7 @@ export class MoexApiService {
                 name: share[1],
                 category: SecurityCategories.STOCK,
                 isProfitable: profitableSecurities.includes(share[0]),
-                volatility: volatilities[share]
+                volatility: volatilities[share[1]]
             });
         }
 

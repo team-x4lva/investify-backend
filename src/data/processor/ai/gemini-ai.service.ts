@@ -3,7 +3,10 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { portfolioSchema } from "../../../simulations/schemas/portfolio.schema";
 import { GeneratePortfolioPromptParameters } from "../../../simulations/interfaces/generate-portfolio-prompt-parameters.interface";
-import { GENERATE_PORTFOLIO_PROMPT, GET_SIMULATION_PROMPT } from "src/constants/constants";
+import {
+    GENERATE_PORTFOLIO_PROMPT,
+    GET_SIMULATION_PROMPT
+} from "src/constants/constants";
 import { simulationSchema } from "src/simulations/schemas/simulation.schema";
 import { SimulationPromptParameters } from "src/simulations/interfaces/simulation-prompt-parameters.interface";
 
@@ -36,16 +39,17 @@ export class GeminiAIService {
                 parameters
             );
 
+        console.log(prompt);
+
         const result = await this.portfolioModel.generateContent(prompt);
 
         return JSON.parse(result.response.text());
     }
 
     async generateSimulation(parameters: SimulationPromptParameters) {
-        const prompt: string =
-            this.formatPrompt<SimulationPromptParameters>(
-                GET_SIMULATION_PROMPT,
-                parameters
+        const prompt: string = this.formatPrompt<SimulationPromptParameters>(
+            GET_SIMULATION_PROMPT,
+            parameters
         );
 
         const result = await this.simulationModel.generateContent(prompt);
@@ -54,9 +58,8 @@ export class GeminiAIService {
     }
 
     private formatPrompt<T>(template: string, values: T) {
-        return template.replaceAll(
-            /{(w+)}/g,
-            (match, key) => values[key] || match
+        return template.replace(/{([a-zA-Z]+)}/g, (match, key) =>
+            values[key] !== undefined ? values[key] : match
         );
     }
 }
