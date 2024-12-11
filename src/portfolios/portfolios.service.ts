@@ -6,12 +6,14 @@ import { PortfolioEntity } from "./entities/portfolio.entity";
 import { Repository } from "typeorm";
 import { GeminiAIService } from "src/data/processor/ai/gemini-ai.service";
 import { SecurityEntity } from "src/securities/entities/security.entity";
+import { SecuritiesService } from "src/securities/securities.service";
 
 @Injectable()
 export class PortfoliosService {
     constructor(
         @InjectRepository(PortfolioEntity)
         private readonly portfolioRepository: Repository<PortfolioEntity>,
+        private readonly securitiesService: SecuritiesService,
         private readonly geminiAIService: GeminiAIService
     ) {}
 
@@ -19,14 +21,13 @@ export class PortfoliosService {
         const { securitiesIds, ...data } = createPortfolioDto;
         const portfolio = this.portfolioRepository.create(data);
 
-        portfolio.securities = securitiesIds.map((id) => ({
-            ...new SecurityEntity(),
-            id
-        }));
+        const relatedSecurities =
+            await this.securitiesService.findByIds(securitiesIds);
+        portfolio.securities = relatedSecurities;
 
         console.log("portfolio: ", portfolio);
 
-        return await this.portfolioRepository.(createPortfolioDto);
+        return await this.portfolioRepository.save(createPortfolioDto);
     }
 
     findAll() {

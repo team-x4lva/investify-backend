@@ -51,8 +51,15 @@ export class MoexApiService {
     }
 
     async getMoexSecurities(param: string) {
+        let board: string;
+        if (param === "shares") {
+            board = "TQBR";
+        } else {
+            board = "TQCB";
+        }
+
         const response = await axios.get(
-            `https://iss.moex.com/iss/engines/stock/markets/${param}/boards/TQBR/securities.json?securities.columns=SECID,SHORTNAME`
+            `https://iss.moex.com/iss/engines/stock/markets/${param}/boards/${board}/securities.json?securities.columns=SECID,SHORTNAME`
         );
 
         return response.data.securities.data;

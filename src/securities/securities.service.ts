@@ -20,6 +20,10 @@ export class SecuritiesService {
         return await this.securityRepository.find();
     }
 
+    async findByIds(ids: number[]) {
+        return await this.securityRepository.findByIds(ids);
+    }
+
     async isMoexDataAvailable() {
         const amount = await this.securityRepository.count();
 
