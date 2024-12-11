@@ -1,11 +1,11 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { SecurityCategories } from "../enums/security-categories.enum";
 
 @Entity({
     name: "securities"
 })
 export class SecurityEntity {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number;
 
     @Column({

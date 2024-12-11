@@ -13,7 +13,7 @@ export class MoexApiService {
 
     async getDataByDate(security: string, from: string, till: string) {
         const response = await axios.get(
-            `https://iss.moex.com/iss/history/engines/stock/markets/shares/securities/${security}.json?from=${from}&till=${till}&start=0`
+            `https://iss.moex.com/iss/history/engines/stock/markets/shares/boards/TQBR/securities/${security}.json?from=${from}&till=${till}&start=0`
         );
         const data = response.data;
         const openIndex = +data.history.columns.indexOf("OPEN");
@@ -35,7 +35,7 @@ export class MoexApiService {
 
     async getMoexSecuritiesIds(param: string) {
         const response = await axios.get(
-            `https://iss.moex.com/iss/engines/stock/markets/${param}/securities.json?securities.columns=SECID,SHORTNAME`
+            `https://iss.moex.com/iss/engines/stock/markets/${param}/boards/TQBR/securities.json?securities.columns=SECID,SHORTNAME`
         );
         const data = response.data;
         const securitiesIds = [];
@@ -48,7 +48,7 @@ export class MoexApiService {
 
     async getMoexSecurities(param: string) {
         const response = await axios.get(
-            `https://iss.moex.com/iss/engines/stock/markets/${param}/securities.json?securities.columns=SECID,SHORTNAME`
+            `https://iss.moex.com/iss/engines/stock/markets/${param}/boards/TQBR/securities.json?securities.columns=SECID,SHORTNAME`
         );
 
         return response.data.securities.data;
@@ -58,7 +58,7 @@ export class MoexApiService {
         const historicalData = {};
         for (const security of securities) {
             const response = await axios.get(
-                `https://iss.moex.com/iss/history/engines/stock/markets/${param}/securities/${security}.json?from=2023-12-10&till=2024-12-10`
+                `https://iss.moex.com/iss/history/engines/stock/markets/${param}/boards/TQBR/securities/${security}.json?from=2023-12-10&till=2024-12-10`
             );
             const data = response.data;
             const prices = [];
