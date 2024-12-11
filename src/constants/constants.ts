@@ -18,8 +18,8 @@ Key events or factors that might influence the scenarios (e.g., interest rate ch
 5. Timeline-Based Guidance:
 Suggestions for periodic portfolio rebalancing during the investment period.
 Guidance on how to respond to potential market changes (e.g., increase gold allocation during inflation spikes).
-6. Profit-time curve:
-In addition to the forecast, provide the points for the graph in the specified format. 
+6. Profit-time graph:
+In addition to the forecast, provide the points for the graph in the specified format (base capital is {moneyAmount}), there should be 10 points on the graph with equal time intervals. 
 
 Ensure that the recommendations align with the user's preferences and market trends. Focus on clear, actionable advice tied to the investment period and potential market events.`;
 

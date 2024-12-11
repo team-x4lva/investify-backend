@@ -213,7 +213,8 @@ export const simulationSchema: Schema = {
                     },
                     y: {
                         type: SchemaType.NUMBER,
-                        description: "Profit at every interval."
+                        description:
+                            "Profit at every interval. Base capital is taken from the user input"
                     }
                 },
                 required: ["x", "y"]
