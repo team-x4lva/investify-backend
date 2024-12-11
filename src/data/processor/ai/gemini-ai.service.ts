@@ -52,6 +52,8 @@ export class GeminiAIService {
             parameters
         );
 
+        console.log(prompt);
+
         const result = await this.simulationModel.generateContent(prompt);
 
         return JSON.parse(result.response.text());
