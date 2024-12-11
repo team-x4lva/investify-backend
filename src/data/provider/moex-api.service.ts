@@ -179,12 +179,20 @@ export class MoexApiService {
         const prices = await this.getHistoricalData(param, securities);
         const volatilities = {};
         for (const security of securities) {
-            const returns = prices[security].slice(1).map((price, index) => 
-                Math.log(price / prices[security][index])
-            );
-            const meanReturn = returns.reduce((sum, r) => sum + r, 0) / returns.length;
-            const variance = returns.reduce((sum, r) => sum + Math.pow(r - meanReturn, 2), 0) / (returns.length - 1);
-            volatilities[security] = (Math.sqrt(variance));
+            const returns = prices[security]
+                .slice(1)
+                .map((price, index) =>
+                    Math.log(price / prices[security][index])
+                );
+            const meanReturn =
+                returns.reduce((sum, r) => sum + r, 0) / returns.length;
+            const variance =
+                returns.reduce(
+                    (sum, r) => sum + Math.pow(r - meanReturn, 2),
+                    0
+                ) /
+                (returns.length - 1);
+            volatilities[security] = Math.sqrt(variance);
         }
         return volatilities;
     }

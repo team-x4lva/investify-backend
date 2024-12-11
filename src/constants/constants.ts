@@ -60,7 +60,9 @@ Provide diversification by including a mix of assets in each category.
 Ensure the portfolio aligns with the given strategy while maintaining flexibility for market conditions.
 Where possible, prioritize instruments linked to Russian companies or issuers.
 
-Translate response text ro Russian`;
+Translate response text to Russian. Provide the response in JSON (but without the \`\`\`json ...\`\`\` wrapping).
+
+Use the following dataset: {dataset}.`;
 
 export const IS_PUBLIC_KEY = "isPublic";
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);

@@ -16,4 +16,9 @@ export class UsersController {
     findOne(@Param("id") id: string) {
         return this.usersService.findOne({ id: +id });
     }
+
+    @Get(":id/portfolios")
+    findPortfolios(@Param("id") id: string) {
+        return this.usersService.findPortfolios(+id);
+    }
 }

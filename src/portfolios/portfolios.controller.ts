@@ -12,12 +12,14 @@ import { CreatePortfolioDto } from "./dto/create-portfolio.dto";
 import { UpdatePortfolioDto } from "./dto/update-portfolio.dto";
 import { GeneratePortfolioDto } from "./dto/generate-portfolio.dto";
 import { GeminiAIService } from "src/data/processor/ai/gemini-ai.service";
+import { SecuritiesService } from "src/securities/securities.service";
 
 @Controller("portfolios")
 export class PortfoliosController {
     constructor(
         private readonly portfoliosService: PortfoliosService,
-        private readonly geminiAIService: GeminiAIService
+        private readonly geminiAIService: GeminiAIService,
+        private readonly securitiesService: SecuritiesService
     ) {}
 
     @Post()
@@ -49,14 +51,17 @@ export class PortfoliosController {
     }
 
     @Post("generate")
-    generatePortfolio(@Body() generatePortfolioDto: GeneratePortfolioDto) {
+    async generatePortfolio(
+        @Body() generatePortfolioDto: GeneratePortfolioDto
+    ) {
         return this.geminiAIService.generatePortfolio({
             moneyAmount: generatePortfolioDto.moneyAmount,
             startDate: new Date(),
             endDate: generatePortfolioDto.endDate,
             desiredInstrumentsCategories:
                 generatePortfolioDto.desiredInstrumentsCategories,
-            volatility: generatePortfolioDto.volatility
+            volatility: generatePortfolioDto.volatility,
+            dataset: await this.securitiesService.getProfitable()
         });
     }
 }

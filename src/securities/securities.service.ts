@@ -20,6 +20,14 @@ export class SecuritiesService {
         return await this.securityRepository.find();
     }
 
+    async getProfitable() {
+        return await this.securityRepository.find({
+            where: {
+                isProfitable: true
+            }
+        });
+    }
+
     async findOne(ticker: string) {
         return await this.securityRepository.findOneBy({ ticker });
     }
