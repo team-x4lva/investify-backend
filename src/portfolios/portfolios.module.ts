@@ -5,10 +5,12 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { PortfolioEntity } from "./entities/portfolio.entity";
 import { DataProcessorModule } from "src/data/processor/ai/data-processor.module";
 import { SecuritiesModule } from "src/securities/securities.module";
+import { DataProviderModule } from "src/data/provider/data-provider.module";
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([PortfolioEntity]),
+        DataProviderModule,
         DataProcessorModule,
         SecuritiesModule
     ],

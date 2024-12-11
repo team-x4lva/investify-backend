@@ -5,5 +5,5 @@ export interface GeneratePortfolioPromptParameters {
     desiredInstrumentsCategories: string[];
     volatility: number;
     dataset: string;
-    articles: string[];
+    articles: string;
 }

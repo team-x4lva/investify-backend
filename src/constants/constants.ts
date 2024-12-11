@@ -18,7 +18,7 @@ Key events or factors that might influence the scenarios (e.g., interest rate ch
 5. Timeline-Based Guidance:
 Suggestions for periodic portfolio rebalancing during the investment period.
 Guidance on how to respond to potential market changes (e.g., increase gold allocation during inflation spikes).
-6.Profit-time curve:
+6. Profit-time curve:
 In addition to the forecast, provide the points for the graph in the specified format. 
 
 Ensure that the recommendations align with the user's preferences and market trends. Focus on clear, actionable advice tied to the investment period and potential market events.`;
@@ -41,9 +41,10 @@ Key Parameters:
   Money Amount: {moneyAmount}
   Desired degree of risk (0 - no risk at all, 1 - maximum risk): {volatility}
 
-Conservative (0 - 0.3 risk degree): Focus on capital preservation with low risk and steady returns. Allocate a higher percentage to bonds and stable instruments.
-Balanced (0.3 - 0.7 risk degree): Aim for moderate risk and returns by blending equities and bonds, complemented with smaller portions of alternative assets.
-Aggressive (0.7 - 1 risk degree): Prioritize growth with high risk and potential for high returns, focusing on equities and alternative investments.
+Choose the investment strategy based on the desired degree of risk:
+- conservative (0 - 0.3 risk degree): Focus on capital preservation with low risk and steady returns. Allocate a higher percentage to bonds and stable instruments.
+- balanced (0.3 - 0.7 risk degree): Aim for moderate risk and returns by blending equities and bonds, complemented with smaller portions of alternative assets.
+- aggressive (0.7 - 1 risk degree): Prioritize growth with high risk and potential for high returns, focusing on equities and alternative investments.
 
 Asset Categories: {desiredInstrumentsCategories}
 Equities (Stocks): Include large-cap, mid-cap, and small-cap stocks diversified across industries and geographies, with a preference for Russian companies.
@@ -53,14 +54,16 @@ Currency: Incorporate foreign exchange options for diversification and hedging.
 Generate percentage allocations for chosen asset category based on the selected strategy and user preferences.
 
 Users can specify desired percentages for each category or follow default allocations aligned with the strategy.
-Additional Requirements: 
 
-Tailor allocations to minimize risks within each category.
-Provide diversification by including a mix of assets in each category.
-Ensure the portfolio aligns with the given strategy while maintaining flexibility for market conditions.
-Where possible, prioritize instruments linked to Russian companies or issuers.
+Additional Requirements: 
+- tailor allocations to minimize risks within each category.
+- provide reasonable diversification by including a mix of assets in each category.
+- ensure the portfolio aligns with the given strategy while maintaining flexibility for market conditions.
+- where possible, prioritize instruments linked to Russian companies or issuers.
 
 Translate response text to Russian. Provide the response in JSON (but without the \`\`\`json ...\`\`\` wrapping).
+
+Use the following dataset of investing instruments: {dataset}.
 
 Use the following dataset of news: {articles} to analyze the political-economic situation`;
 

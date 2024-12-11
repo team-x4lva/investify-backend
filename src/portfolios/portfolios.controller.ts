@@ -13,13 +13,15 @@ import { UpdatePortfolioDto } from "./dto/update-portfolio.dto";
 import { GeneratePortfolioDto } from "./dto/generate-portfolio.dto";
 import { GeminiAIService } from "src/data/processor/ai/gemini-ai.service";
 import { SecuritiesService } from "src/securities/securities.service";
+import { ScraperService } from "src/data/provider/scraper.service";
 
 @Controller("portfolios")
 export class PortfoliosController {
     constructor(
         private readonly portfoliosService: PortfoliosService,
         private readonly geminiAIService: GeminiAIService,
-        private readonly securitiesService: SecuritiesService
+        private readonly securitiesService: SecuritiesService,
+        private readonly scraperService: ScraperService
     ) {}
 
     @Post()
@@ -61,7 +63,8 @@ export class PortfoliosController {
             desiredInstrumentsCategories:
                 generatePortfolioDto.desiredInstrumentsCategories,
             volatility: generatePortfolioDto.volatility,
-            dataset: (await this.securitiesService.getProfitable()).toString()
+            dataset: (await this.securitiesService.getProfitable()).toString(),
+            articles: (await this.scraperService.getNews()).toString()
         });
     }
 }
