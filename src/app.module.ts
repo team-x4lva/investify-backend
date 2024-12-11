@@ -9,6 +9,7 @@ import { AuthModule } from "./auth/auth.module";
 import { UserEntity } from "./users/entities/user.entity";
 import { PortfoliosModule } from "./portfolios/portfolios.module";
 import { PortfolioEntity } from "./portfolios/entities/portfolio.entity";
+import { SecuritiesModule } from "./securities/securities.module";
 
 @Module({
     imports: [
@@ -44,7 +45,8 @@ import { PortfolioEntity } from "./portfolios/entities/portfolio.entity";
         }),
         PrognosesModule,
         AuthModule,
-        PortfoliosModule
+        PortfoliosModule,
+        SecuritiesModule
     ],
     controllers: [AppController],
     providers: [AppService]

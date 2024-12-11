@@ -4,12 +4,14 @@ import { UpdatePortfolioDto } from "./dto/update-portfolio.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { PortfolioEntity } from "./entities/portfolio.entity";
 import { Repository } from "typeorm";
+import { GeminiAIService } from "src/data/processor/ai/gemini-ai.service";
 
 @Injectable()
 export class PortfoliosService {
     constructor(
         @InjectRepository(PortfolioEntity)
-        private readonly portfolioRepository: Repository<PortfolioEntity>
+        private readonly portfolioRepository: Repository<PortfolioEntity>,
+        private readonly geminiAIService: GeminiAIService
     ) {}
 
     async create(createPortfolioDto: CreatePortfolioDto) {
@@ -36,7 +38,14 @@ export class PortfoliosService {
         return await this.portfolioRepository.find({ where: { userId } });
     }
 
-    async generatePortfolio() {
-        // Generate portfolio
-    }
+    // async generatePortfolio(generatePortfolioDto: GeneratePortfolioDto) {
+    //     return await this.geminiAIService.generatePortfolio({
+    //         moneyAmount: generatePortfolioDto.moneyAmount,
+    //         startDate: new Date(),
+    //         endDate: generatePortfolioDto.endDate,
+    //         desiredInstrumentsCategories:
+    //             generatePortfolioDto.desiredInstrumentsCategories,
+    //         volatility: generatePortfolioDto.volatility
+    //     });
+    // }
 }

@@ -10,10 +10,15 @@ import {
 import { PortfoliosService } from "./portfolios.service";
 import { CreatePortfolioDto } from "./dto/create-portfolio.dto";
 import { UpdatePortfolioDto } from "./dto/update-portfolio.dto";
+import { GeneratePortfolioDto } from "./dto/generate-portfolio.dto";
+import { GeminiAIService } from "src/data/processor/ai/gemini-ai.service";
 
 @Controller("portfolios")
 export class PortfoliosController {
-    constructor(private readonly portfoliosService: PortfoliosService) {}
+    constructor(
+        private readonly portfoliosService: PortfoliosService,
+        private readonly geminiAIService: GeminiAIService
+    ) {}
 
     @Post()
     create(@Body() createPortfolioDto: CreatePortfolioDto) {
@@ -44,7 +49,14 @@ export class PortfoliosController {
     }
 
     @Post("generate")
-    generatePortfolio(@Body() createPortfolioDto: CreatePortfolioDto) {
-        return "";//this.portfoliosService.generatePortfolio(createPortfolioDto);
+    generatePortfolio(@Body() generatePortfolioDto: GeneratePortfolioDto) {
+        return this.geminiAIService.generatePortfolio({
+            moneyAmount: generatePortfolioDto.moneyAmount,
+            startDate: new Date(),
+            endDate: generatePortfolioDto.endDate,
+            desiredInstrumentsCategories:
+                generatePortfolioDto.desiredInstrumentsCategories,
+            volatility: generatePortfolioDto.volatility
+        });
     }
 }
