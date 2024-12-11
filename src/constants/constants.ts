@@ -1,6 +1,6 @@
 import { SetMetadata } from "@nestjs/common";
 
-export const GET_PROGNOSIS_PROMPT = `Analyze the provided financial data and user preferences to generate a detailed investment strategy tailored to the user's risk tolerance and investment horizon. Predict asset returns, evaluate risks, and recommend specific actions for optimizing the portfolio over the selected investment period. Incorporate growth or decline predictions for key assets and suggest when to buy, sell, or adjust allocations. Provide the response in JSON (but without the \`\`\`json ...\`\`\` wrapping):
+export const GET_SIMULATION_PROMPT = `Analyze the provided financial data and user preferences to generate a detailed investment strategy tailored to the user's risk tolerance and investment horizon. Predict asset returns, evaluate risks, and recommend specific actions for optimizing the portfolio over the selected investment period. Incorporate growth or decline predictions for key assets and suggest when to buy, sell, or adjust allocations. Provide the response in JSON (but without the \`\`\`json ...\`\`\` wrapping):
 
 1. Forecast:
 Predicted returns for each asset over the user's investment horizon: from {startDate} to {endDate} (short-term, medium-term, long-term).

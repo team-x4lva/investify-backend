@@ -3,8 +3,9 @@ import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { portfolioSchema } from "../../../simulations/schemas/portfolio.schema";
 import { GeneratePortfolioPromptParameters } from "../../../simulations/interfaces/generate-portfolio-prompt-parameters.interface";
-import { GENERATE_PORTFOLIO_PROMPT } from "src/constants/constants";
+import { GENERATE_PORTFOLIO_PROMPT, GET_SIMULATION_PROMPT } from "src/constants/constants";
 import { simulationSchema } from "src/simulations/schemas/simulation.schema";
+import { SimulationPromptParameters } from "src/simulations/interfaces/simulation-prompt-parameters.interface";
 
 @Injectable()
 export class GeminiAIService {
@@ -36,6 +37,18 @@ export class GeminiAIService {
             );
 
         const result = await this.portfolioModel.generateContent(prompt);
+
+        return JSON.parse(result.response.text());
+    }
+
+    async generateSimulation(parameters: SimulationPromptParameters) {
+        const prompt: string =
+            this.formatPrompt<SimulationPromptParameters>(
+                GET_SIMULATION_PROMPT,
+                parameters
+        );
+
+        const result = await this.simulationModel.generateContent(prompt);
 
         return JSON.parse(result.response.text());
     }
