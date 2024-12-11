@@ -42,4 +42,9 @@ export class PortfoliosController {
     remove(@Param("id") id: string) {
         return this.portfoliosService.remove(+id);
     }
+
+    @Post("generate")
+    generatePortfolio(@Body() createPortfolioDto: CreatePortfolioDto) {
+        return "";//this.portfoliosService.generatePortfolio(createPortfolioDto);
+    }
 }

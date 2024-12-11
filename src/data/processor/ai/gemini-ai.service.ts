@@ -1,7 +1,9 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { portfolioSchema } from "../schemas/portfolio.schema";
+import { portfolioSchema } from "../../../prognoses/schemas/portfolio.schema";
+import { GeneratePortfolioPromptParameters } from "../../../prognoses/interfaces/generate-portfolio-prompt-parameters.interface";
+import { GENERATE_PORTFOLIO_PROMPT } from "src/constants/constants";
 
 @Injectable()
 export class GeminiAIService {
@@ -18,8 +20,12 @@ export class GeminiAIService {
         }
     });
 
-    async getAIPrognosis() {
-        const prompt: string = ""; //this.formatPrompt(GET_PROGNOSIS_PROMPT, {});
+    async generatePortfolio(parameters: GeneratePortfolioPromptParameters) {
+        const prompt: string =
+            this.formatPrompt<GeneratePortfolioPromptParameters>(
+                GENERATE_PORTFOLIO_PROMPT,
+                parameters
+            );
 
         const result = await this.portfolioModel.generateContent(prompt);
 

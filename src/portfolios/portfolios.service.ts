@@ -12,8 +12,8 @@ export class PortfoliosService {
         private readonly portfolioRepository: Repository<PortfolioEntity>
     ) {}
 
-    create(createPortfolioDto: CreatePortfolioDto) {
-        return this.portfolioRepository.save(createPortfolioDto);
+    async create(createPortfolioDto: CreatePortfolioDto) {
+        return await this.portfolioRepository.save(createPortfolioDto);
     }
 
     findAll() {
@@ -34,5 +34,9 @@ export class PortfoliosService {
 
     async findByUserId(userId: number) {
         return await this.portfolioRepository.find({ where: { userId } });
+    }
+
+    async generatePortfolio() {
+        // Generate portfolio
     }
 }
