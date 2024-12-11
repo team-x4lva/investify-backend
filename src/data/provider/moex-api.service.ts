@@ -21,10 +21,11 @@ export class MoexApiService {
             low: dataArray[lowIndex],
             volume: dataArray[volumeIndex]
         };
+
         return result;
     }
 
-    async getMoexSecurities(securitiesAmount = 300) {
+    async getMoexSecurities(securitiesAmount: number = 300) {
         const response = await axios.get(
             "https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json?securities.columns=SECID,SHORTNAME"
         );
