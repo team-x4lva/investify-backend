@@ -17,7 +17,7 @@ export class SimulationsService {
         const bestDepositRates =
             await this.scraperService.getBestDepositRates();
 
-        //this.geminiAIService
+        //this.geminiAIService.();
 
         return {
             bestDepositRates
