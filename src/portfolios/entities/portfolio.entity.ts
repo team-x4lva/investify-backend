@@ -28,4 +28,7 @@ export class PortfolioEntity {
     @ManyToMany(() => SecurityEntity)
     @JoinTable()
     securities: SecurityEntity[];
+
+    @Column("decimal", { precision: 3, scale: 2, array: true })
+    share: number[];
 }

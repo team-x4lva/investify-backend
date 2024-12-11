@@ -3,13 +3,13 @@ import { GeminiAIService } from "../data/processor/ai/gemini-ai.service";
 import { ScraperService } from "src/data/provider/scraper.service";
 
 @Injectable()
-export class PrognosesService {
+export class SimulationsService {
     constructor(
         private readonly scraperService: ScraperService,
         private readonly geminiAIService: GeminiAIService
     ) {}
 
-    async makePrognosis(
+    async conductSimulation(
         moneyAmount: number,
         endDate: Date,
         securitiesTickers: string[]

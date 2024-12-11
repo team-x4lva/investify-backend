@@ -12,8 +12,8 @@ export class SecuritiesService {
         private readonly securityRepository: Repository<SecurityEntity>
     ) {}
 
-    async create(createSecurityDto: CreateSecurityDto) {
-        return await this.securityRepository.save(createSecurityDto);
+    async create(...createSecurityDtos: CreateSecurityDto[]) {
+        return await this.securityRepository.save(createSecurityDtos);
     }
 
     async findAll() {

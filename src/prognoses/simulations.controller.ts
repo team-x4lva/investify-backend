@@ -1,14 +1,14 @@
 import { Body, Controller, Post } from "@nestjs/common";
-import { PrognosesService } from "./prognoses.service";
+import { SimulationsService } from "./simulations.service";
 import { ConductSimulationDto } from "./dto/conduct-simulation.dto";
 
-@Controller("prognoses")
-export class PrognosesController {
-    constructor(private readonly prognosesService: PrognosesService) {}
+@Controller("simulations")
+export class SimulationsController {
+    constructor(private readonly simulationsServices: SimulationsService) {}
 
     @Post()
     conductSimulation(@Body() conductSimulationDto: ConductSimulationDto) {
-        return this.prognosesService.makePrognosis(
+        return this.simulationsServices.conductSimulation(
             conductSimulationDto.moneyAmount,
             conductSimulationDto.endDate,
             conductSimulationDto.portfolio.securitiesTickers
