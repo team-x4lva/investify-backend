@@ -27,10 +27,10 @@ export class PortfolioEntity {
     @ManyToOne(() => UserEntity, (user) => user.portfolios)
     user: UserEntity;
 
-    @ManyToMany(() => SecurityEntity)
+    @ManyToMany(() => SecurityEntity, { cascade: true, eager: true })
     @JoinTable()
     securities: SecurityEntity[];
 
-    @Column("decimal", { precision: 3, scale: 2, array: true })
+    @Column("decimal", { precision: 4, scale: 3, array: true })
     share: number[];
 }

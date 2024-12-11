@@ -31,7 +31,7 @@ export class ScraperService {
         return text;
     }
 
-    async getRecommendations() {
+    private async getRecommendations() {
         const response = await axios.get(this.recommendationsEndpoint);
         const $ = cheerio.load(response.data);
         const recommendations = $.extract({
@@ -41,7 +41,7 @@ export class ScraperService {
         return recommendations;
     }
 
-    async getStocks() {
+    private async getStocks() {
         const response = await axios.get(this.stocksEndpoint);
         const $ = cheerio.load(response.data);
         const bareStocks = $.extract({

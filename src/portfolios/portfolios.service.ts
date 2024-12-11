@@ -5,6 +5,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { PortfolioEntity } from "./entities/portfolio.entity";
 import { Repository } from "typeorm";
 import { GeminiAIService } from "src/data/processor/ai/gemini-ai.service";
+import { SecurityEntity } from "src/securities/entities/security.entity";
 
 @Injectable()
 export class PortfoliosService {
@@ -15,7 +16,17 @@ export class PortfoliosService {
     ) {}
 
     async create(createPortfolioDto: CreatePortfolioDto) {
-        return await this.portfolioRepository.save(createPortfolioDto);
+        const { securitiesIds, ...data } = createPortfolioDto;
+        const portfolio = this.portfolioRepository.create(data);
+
+        portfolio.securities = securitiesIds.map((id) => ({
+            ...new SecurityEntity(),
+            id
+        }));
+
+        console.log("portfolio: ", portfolio);
+
+        return await this.portfolioRepository.(createPortfolioDto);
     }
 
     findAll() {
