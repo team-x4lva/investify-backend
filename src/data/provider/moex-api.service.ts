@@ -1,8 +1,12 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import axios from "axios";
+import { SecuritiesService } from '../../securities/securities.service';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class MoexApiService {
+    constructor(private readonly securitiesService: SecuritiesService) {}
+    private readonly logger = new Logger(MoexApiService.name);
     async getDataByDate(security: string, from: string, till: string) {
         const response = await axios.get(
             `https://iss.moex.com/iss/history/engines/stock/markets/shares/securities/${security}.json?from=${from}&till=${till}&start=0`
@@ -97,5 +101,13 @@ export class MoexApiService {
             }
         }
         return profitableSecurities;
+    }
+
+    @Cron(' * * * 1 * *')
+    async fillDataBase() {
+        const shares = await this.getMoexSecurities("shares");
+        const bonds = await this.getMoexSecurities("bonds");
+        this.securitiesService.create(...shares);
+        this.securitiesService.create(...bonds);
     }
 }
