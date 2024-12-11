@@ -28,8 +28,8 @@ export class SimulationsService {
                 share: portfolio.share[i]
             });
         }
-        const bestDepositRates =
-            await this.scraperService.getBestDepositRates();
+        //const bestDepositRates =
+          //  await this.scraperService.getBestDepositRates();
 
         const promptParameters: SimulationPromptParameters = {
             moneyAmount: moneyAmount,
@@ -41,7 +41,7 @@ export class SimulationsService {
             await this.geminiAIService.generateSimulation(promptParameters);
 
         return {
-            bestDepositRates,
+            //bestDepositRates,
             result
         };
     }
